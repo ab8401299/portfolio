@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 作品集</title>
+  <style>
+    :root {
+      --bg: #0a0a0c;
+      --paper: rgba(18,18,22,.82);
+      --paper-strong: rgba(24,24,28,.94);
+      --text: #f3f1ee;
+      --muted: #b7afa6;
+      --line: rgba(255,255,255,0.08);
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 16px;
+      --max: 1220px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      color: var(--text);
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.04), transparent 18%),
+        radial-gradient(circle at 80% 10%, rgba(255,255,255,.03), transparent 20%),
+        radial-gradient(circle at 30% 80%, rgba(255,255,255,.025), transparent 22%),
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(180deg, #0b0b0e 0%, #070709 100%);
+      background-size: auto, auto, auto, 36px 36px, 36px 36px, auto;
+      line-height: 1.7;
+    }
+
+    img, video { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 34px 0 20px;
+    }
+
+    .hero-card {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 28px;
+      background: var(--paper);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 34px;
+      box-shadow: var(--shadow);
+      padding: 28px;
+    }
+
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6px 4px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: .08em;
+    }
+
+    h1 {
+      margin: 16px 0 10px;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1.08;
+      letter-spacing: -.03em;
+    }
+
+    .lead {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 54ch;
+    }
+
+    .mini-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .mini-meta span {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--line);
+      font-size: 14px;
+      color: #ddd5cb;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 360px;
+      border-radius: 26px;
+      overflow: hidden;
+      background: #111;
+    }
+
+    .hero-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+        section {
+      padding: 18px 0 10px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.4rem, 2vw, 2rem);
+      letter-spacing: -.02em;
+    }
+
+    .section-sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: .96rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--paper-strong);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .thumb {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      background: #141419;
+      cursor: pointer;
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #0d0d11;
+      transition: transform .45s ease;
+    }
+
+    .card:hover .thumb img {
+      transform: scale(1.035);
+    }
+
+    .zoom-badge {
+      position: absolute;
+      right: 14px;
+      bottom: 14px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.45);
+      border: 1px solid rgba(255,255,255,.12);
+      font-size: 13px;
+      color: #f0ebe5;
+    }
+
+    .card-body {
+      padding: 18px 18px 20px;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 1.04rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .95rem;
+      line-height: 1.72;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .video-card {
+      background: var(--paper-strong);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .video-box {
+      aspect-ratio: 21 / 9;
+      background: linear-gradient(135deg, #101015, #191922);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #bdb6ad;
+      font-size: .98rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .video-box video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #000;
+    }
+
+    .simple-panel {
+      background: var(--paper-strong);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+
+    .simple-panel p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .simple-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 18px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .simple-list li {
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px 14px;
+      color: #e8e1d8;
+      font-size: .95rem;
+    }
+
+    footer {
+      padding: 26px 0 38px;
+      color: #8d867d;
+      font-size: .9rem;
+      text-align: center;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(5, 5, 8, .86);
+      backdrop-filter: blur(10px);
+      z-index: 999;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox-inner {
+      position: relative;
+      max-width: min(92vw, 1200px);
+      max-height: 92vh;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,.45);
+      background: #111;
+    }
+
+    .lightbox img {
+      max-width: min(92vw, 1200px);
+      max-height: 92vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255,255,255,.88);
+      color: #1e1b18;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 980px) {
+      .hero-card { grid-template-columns: 1fr; }
+      .hero-visual { min-height: 420px; }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 720px) {
+      .wrap { width: min(calc(100% - 20px), var(--max)); }
+      .hero { padding-top: 18px; }
+      .hero-card { padding: 16px; gap: 16px; border-radius: 24px; }
+      .hero-visual { min-height: 320px; border-radius: 18px; }
+      .grid, .video-grid, .simple-list { grid-template-columns: 1fr; }
+      .card, .video-card, .simple-panel { border-radius: 20px; }
+      .section-head { align-items: start; flex-direction: column; }
+      .card-body { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="hero-card">
+        <div class="hero-copy">
+          <span class="eyebrow">AI ART PORTFOLIO</span>
+          <h1>作品展示</h1>
+          <p class="lead">以角色設計、畫面氛圍、材質表現與生成流程控制為主，整理成一個簡潔的面試展示頁。</p>
+          <div class="mini-meta">
+            <span>ComfyUI Workflow</span>
+            <span>Stable Diffusion / SDXL</span>
+            <span>角色與風格控制</span>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <img src="00064-2177082844.png" alt="首頁主視覺" />
+          
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>精選作品</h2>
+          
+        </div>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <div class="thumb" data-full="2026-01-31_img_55.png">
+            <img src="2026-01-31_img_55.png" alt="秋景獸耳角色近景" />
+            <span class="zoom-badge">放大</span>
+          </div>
+          <div class="card-body">
+            <h3>角色近景與表情控制</h3>
+            <p>以近距離構圖呈現角色辨識度，著重在髮色、五官與整體神情的穩定表現。</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="thumb" data-full="2026-01-31_img_52.png">
+            <img src="2026-01-31_img_52.png" alt="秋景獸耳角色坐姿" />
+            <span class="zoom-badge">放大</span>
+          </div>
+          <div class="card-body">
+            <h3>同角色的不同構圖呈現</h3>
+            <p>延續同一角色設定，透過不同距離與姿勢調整，讓畫面保有一致性與完整度。</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="thumb" data-full="Gemini_Generated_Image_ootibcootibcooti.png">
+            <img src="Gemini_Generated_Image_ootibcootibcooti.png" alt="模型感角色作品" />
+            <span class="zoom-badge">放大</span>
+          </div>
+          <div class="card-body">
+            <h3>模型感與材質表現</h3>
+            <p>偏向公仔與模型展示的畫面，重點放在材質質感、立體感與角色完成度。</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="thumb" data-full="img__00110_.png">
+            <img src="img__00110_.png" alt="粉紫極光角色作品" />
+            <span class="zoom-badge">放大</span>
+          </div>
+          <div class="card-body">
+            <h3>氛圍場景與服裝細節</h3>
+            <p>以夜景與柔和色調為主，觀察服裝、飾品與背景光感在同一畫面中的平衡。</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="thumb" data-full="00002-1617914860.png">
+            <img src="00002-1617914860.png" alt="夕陽背影角色作品" />
+            <span class="zoom-badge">放大</span>
+          </div>
+          <div class="card-body">
+            <h3>構圖節奏與畫面延伸</h3>
+            <p>透過背影與大場景安排，讓角色不只停留在單張立繪，也帶出更完整的畫面感。</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="thumb" data-full="2026-03-23_img_46.png">
+            <img src="2026-03-23_img_46.png" alt="海景窗邊角色作品" />
+            <span class="zoom-badge">放大</span>
+          </div>
+          <div class="card-body">
+            <h3>角色延伸與風格變化</h3>
+            <p>以較鮮明的角色語言做風格延伸，測試不同主題下的畫面維持與角色特色表現。</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>影片作品</h2>
+          
+        </div>
+      </div>
+
+      <div class="video-grid">
+        <article class="video-card">
+          <div class="video-box video-box-wide">
+            <video controls preload="metadata" poster="03-23ComfyUI_c_00010.png">
+              <source src="video-01.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>製作方式</h2>
+        </div>
+      </div>
+      <div class="simple-panel">
+        <p>主要使用 ComfyUI 建立與調整 workflow，依照主題整理參考方向，測試不同模型、LoRA 與生成條件，再從輸出結果中挑選較穩定的版本，針對角色一致性、材質表現與整體畫面完成度做整理與調整。</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>相關能力</h2>
+        </div>
+      </div>
+      <div class="simple-panel">
+        <ul class="simple-list">
+          <li>ComfyUI workflow 建立與修改</li>
+          <li>Stable Diffusion / SDXL 使用</li>
+          <li>LoRA 與資料整理經驗</li>
+          <li>角色與風格控制測試</li>
+          <li>結果篩選與異常觀察</li>
+          <li>基本 Python 與流程調整能力</li>
+        </ul>
+      </div>
+    </section>
+
+    
+  </div>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightboxClose" aria-label="關閉">×</button>
+      <img id="lightboxImage" src="" alt="放大檢視圖片" />
+    </div>
+  </div>
+
+  <script>
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const thumbs = document.querySelectorAll('.thumb');
+
+    thumbs.forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        const src = thumb.dataset.full;
+        lightboxImage.src = src;
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxImage.src = '';
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+    });
+  </script>
+</body>
+</html>
